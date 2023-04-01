@@ -32,9 +32,12 @@ jugador_x = 368
 
 #posision y
 jugador_y = 536
-def jugador():
+
+jugador_x_cambio = 0
+
+def jugador(x,y):
     # metodo que significa arrojar ,primer dato la imagen , segundo dato es una tupla de x y
-    pantalla.blit(img_jugador, (jugador_x,jugador_y))
+    pantalla.blit(img_jugador, (x,y))
 
 
 
@@ -54,8 +57,24 @@ while se_ejecuta:
         if evento.type == pygame.QUIT:#este evento es el que corresponde a la X de salir
             se_ejecuta = False
 
+        # para ver si se presiono alguna tecla, este evento es cuando se presiona la tecla
+        if evento.type == pygame.KEYDOWN:
+
+            if evento.key == pygame.K_LEFT: #flecha izquierda
+                jugador_x_cambio = -0.3
+            if evento.key == pygame.K_RIGHT: #flecha derecha
+                jugador_x_cambio = 0.3
+
+        #este evento ocurre cuando se suelta la tecla
+        if evento.type == pygame.KEYUP:
+            if evento.key == pygame.K_LEFT or evento.key == pygame.K_RIGHT:
+                jugador_x_cambio = 0
+
+    jugador_x += jugador_x_cambio
+
+
     #llamamos a jugador pa que se actualize constantemente
-    jugador()
+    jugador(jugador_x,jugador_y)
 
     # actualizamos la pantalla
     pygame.display.update()
