@@ -70,8 +70,21 @@ bala_visible = False
 #variable de puntaje
 puntaje = 0
 
+#unico tipo de fuente incorporado con pygame 
+fuente = pygame.font.Font('freesansbold.ttf', 32)
+texto_x = 10
+texto_y = 10
+
+
 
 ###########################################################################################
+
+#funcion mostrar puntaje desde la fuente es diferente
+def mostrar_puntaje(x, y):
+    texto = fuente.render(f'Puntaje: {puntaje}', True, (255, 255, 255))
+    pantalla.blit(texto, (x, y))
+
+
 def jugador(x,y):
     # metodo que significa arrojar ,primer dato la imagen , segundo dato es una tupla de x y
     pantalla.blit(img_jugador, (x, y))
@@ -169,7 +182,6 @@ while se_ejecuta:
             bala_y = 500
             bala_visible = False
             puntaje += 1
-            print(puntaje)
             enemigo_x[e] = random.randint(0, 736)
             enemigo_y[e] = random.randint(50, 200)
 
@@ -193,6 +205,9 @@ while se_ejecuta:
 
     #llamamos a jugador pa que se actualize constantemente
     jugador(jugador_x, jugador_y)
+
+
+    mostrar_puntaje(texto_x, texto_y)
 
 
 
