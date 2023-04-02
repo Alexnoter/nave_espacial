@@ -10,7 +10,18 @@ import random
 import math
 from pygame import mixer
 
+import io
 
+
+
+
+
+#para convertir strign a bytes
+def fuente_bytes(fuente):
+    with open(fuente, 'rb') as f:
+        ttf_bytes = f.read()
+
+    return io.BytesIO(ttf_bytes)
 
 #############################################################
 
@@ -80,13 +91,16 @@ bala_visible = False
 puntaje = 0
 
 #unico tipo de fuente incorporado con pygame
-fuente = pygame.font.Font('freesansbold.ttf', 32)
+fuente_como_bytes = fuente_bytes("FreeSansBold.ttf")
+
+fuente = pygame.font.Font(fuente_como_bytes, 32)
 texto_x = 10
 texto_y = 10
 
 
 #texto final del juego
-fuente_final = pygame.font.Font('Flicker Free.ttf', 60)
+fuente_como_bytes_flicker = fuente_bytes("Flicker.ttf")
+fuente_final = pygame.font.Font(fuente_como_bytes_flicker, 60)
 
 
 
