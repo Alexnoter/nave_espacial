@@ -7,6 +7,7 @@ display se refiere a lo que nosotros veremos o mostramos
 '''
 import pygame
 import random
+import math
 
 
 
@@ -50,10 +51,15 @@ bala_x = 0
 bala_y = 500
 
 bala_x_cambio = 0  #no la usaremos
-bala_y_cambio = 0.5
+bala_y_cambio = 1
 
 bala_visible = False
 
+#variable de puntaje
+puntaje = 0
+
+
+###########################################################################################
 def jugador(x,y):
     # metodo que significa arrojar ,primer dato la imagen , segundo dato es una tupla de x y
     pantalla.blit(img_jugador, (x, y))
@@ -69,6 +75,18 @@ def disparar_bala(x, y):
     bala_visible = True
 
     pantalla.blit(img_bala, (x + 16, y + 10))
+
+
+#  funcion para detectar las colisiones
+def hay_colision(x_1, y_1, x_2, y_2):
+    distancia =math.sqrt(math.pow(x_2 - x_1, 2) + math.pow(y_2 - y_1, 2))
+    if distancia < 27:
+        return True
+    else:
+        return False
+
+
+
 
 #########################################################################
 
@@ -93,9 +111,9 @@ while se_ejecuta:
         if evento.type == pygame.KEYDOWN:
 
             if evento.key == pygame.K_LEFT: #flecha izquierda
-                jugador_x_cambio = -0.3
+                jugador_x_cambio = -0.5
             if evento.key == pygame.K_RIGHT: #flecha derecha
-                jugador_x_cambio = 0.3
+                jugador_x_cambio = 0.5
 
             #evento al presionar spacio o disparar
             if evento.key == pygame.K_SPACE:
@@ -142,6 +160,16 @@ while se_ejecuta:
         disparar_bala(bala_x, bala_y)
         bala_y -= bala_y_cambio
 
+
+    #llamamos a colision
+    colision = hay_colision(enemigo_x, enemigo_y, bala_x, bala_y)
+    if colision:
+        bala_y = 500
+        bala_visible = False
+        puntaje += 1
+        print(puntaje)
+        enemigo_x = random.randint(0, 736)
+        enemigo_y = random.randint(50, 200)
 
     #llamamos a jugador pa que se actualize constantemente
     jugador(jugador_x, jugador_y)
