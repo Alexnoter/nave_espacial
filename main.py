@@ -8,6 +8,7 @@ display se refiere a lo que nosotros veremos o mostramos
 import pygame
 import random
 import math
+from pygame import mixer
 
 
 
@@ -26,6 +27,13 @@ pygame.display.set_icon(icono)
 
 #llamamos a la imagen
 fondo = pygame.image.load("Fondo.jpg")
+
+
+#Agregar musica
+mixer.music.load('MusicaFondo.mp3')
+mixer.music.play(-1)
+
+
 
 #################################################################################################
 
@@ -70,7 +78,7 @@ bala_visible = False
 #variable de puntaje
 puntaje = 0
 
-#unico tipo de fuente incorporado con pygame 
+#unico tipo de fuente incorporado con pygame
 fuente = pygame.font.Font('freesansbold.ttf', 32)
 texto_x = 10
 texto_y = 10
@@ -142,6 +150,9 @@ while se_ejecuta:
 
             #evento al presionar spacio o disparar
             if evento.key == pygame.K_SPACE:
+                #sonido en pygame
+                sonido_bala = mixer.Sound('disparo.mp3')
+                sonido_bala.play()
                 if not bala_visible:         #solo lanzara balas cuando sea falsp (visiible == False)
                     bala_x = jugador_x
                     disparar_bala(bala_x, bala_y)
@@ -179,6 +190,8 @@ while se_ejecuta:
         # llamamos a colision
         colision = hay_colision(enemigo_x[e], enemigo_y[e], bala_x, bala_y)
         if colision:
+            sonido_colision = mixer.Sound('Golpe.mp3')
+            sonido_colision.play()
             bala_y = 500
             bala_visible = False
             puntaje += 1
