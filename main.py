@@ -70,8 +70,14 @@ while se_ejecuta:
             if evento.key == pygame.K_LEFT or evento.key == pygame.K_RIGHT:
                 jugador_x_cambio = 0
 
+    #modificar la ubicacion del jugador
     jugador_x += jugador_x_cambio
 
+    #mantener dentro del borde
+    if jugador_x <= 0:
+        jugador_x = 0
+    elif jugador_x >= 736:
+        jugador_x = 736
 
     #llamamos a jugador pa que se actualize constantemente
     jugador(jugador_x,jugador_y)
