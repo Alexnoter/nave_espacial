@@ -31,6 +31,7 @@ fondo = pygame.image.load("Fondo.jpg")
 
 #Agregar musica
 mixer.music.load('MusicaFondo.mp3')
+mixer.music.set_volume(0.3)   #volumen de la musica
 mixer.music.play(-1)
 
 
@@ -84,8 +85,19 @@ texto_x = 10
 texto_y = 10
 
 
+#texto final del juego
+fuente_final = pygame.font.Font('Flicker Free.ttf', 60)
+
+
+
 
 ###########################################################################################
+
+def texto_final():
+    mi_fuente_final = fuente_final.render("JUEGO TERMINADO", True, (255, 255, 255))
+    pantalla.blit(mi_fuente_final, (200, 200))
+
+
 
 #funcion mostrar puntaje desde la fuente es diferente
 def mostrar_puntaje(x, y):
@@ -176,6 +188,14 @@ while se_ejecuta:
 
     # modificar la ubicacion del enemigo
     for e in range(cantidad_enemigos):
+
+        #fin del juego(colision del enemigo con el jugador)
+        if enemigo_y[e] > 500:
+            for k in range(cantidad_enemigos):
+                enemigo_y[k] = 1000
+            texto_final()
+            break
+
         enemigo_x[e] += enemigo_x_cambio[e]
 
     # mantener dentro del borde al enemigo
