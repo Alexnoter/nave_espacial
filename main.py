@@ -30,14 +30,16 @@ img_jugador = pygame.image.load("cohete.png")
 #posision x
 jugador_x = 368
 #posision y
-jugador_y = 536
+jugador_y = 500
 jugador_x_cambio = 0
 
 #Agregamos al enemigo
 img_enemigo = pygame.image.load("enemigo.png")
 enemigo_x = random.randint(0, 736)
 enemigo_y = random.randint(50, 200)
-enemigo_x_cambio = 0
+
+enemigo_x_cambio = 0.3
+enemigo_y_cambio = 50
 
 def jugador(x,y):
     # metodo que significa arrojar ,primer dato la imagen , segundo dato es una tupla de x y
@@ -81,11 +83,24 @@ while se_ejecuta:
     #modificar la ubicacion del jugador
     jugador_x += jugador_x_cambio
 
-    #mantener dentro del borde
+    #mantener dentro del borde al jugador
     if jugador_x <= 0:
         jugador_x = 0
     elif jugador_x >= 736:
         jugador_x = 736
+
+
+    # modificar la ubicacion del enemigo
+    enemigo_x += enemigo_x_cambio
+
+    # mantener dentro del borde al enemigo
+    if enemigo_x <= 0:
+        enemigo_x_cambio = 0.3
+        enemigo_y += enemigo_y_cambio
+
+    elif enemigo_x >= 736:
+        enemigo_x_cambio = -0.3
+        enemigo_y += enemigo_y_cambio
 
     #llamamos a jugador pa que se actualize constantemente
     jugador(jugador_x, jugador_y)
