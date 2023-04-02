@@ -49,8 +49,8 @@ img_bala = pygame.image.load("bala.png")
 bala_x = 0
 bala_y = 500
 
-bala_x_cambio = 0 #no la usaremos
-bala_y_cambio = 1
+bala_x_cambio = 0  #no la usaremos
+bala_y_cambio = 0.5
 
 bala_visible = False
 
@@ -96,9 +96,12 @@ while se_ejecuta:
                 jugador_x_cambio = -0.3
             if evento.key == pygame.K_RIGHT: #flecha derecha
                 jugador_x_cambio = 0.3
+
             #evento al presionar spacio o disparar
             if evento.key == pygame.K_SPACE:
-                disparar_bala(jugador_x,bala_y)
+                if not bala_visible:         #solo lanzara balas cuando sea falsp (visiible == False)
+                    bala_x = jugador_x
+                    disparar_bala(bala_x, bala_y)
 
 
         #este evento ocurre cuando se suelta la tecla
@@ -129,9 +132,14 @@ while se_ejecuta:
         enemigo_x_cambio = -0.3
         enemigo_y += enemigo_y_cambio
 
-    #moviento bala jugador
+    #moviento bala jugador:
+    if bala_y <= -64:
+        bala_y = 500
+        bala_visible = False
+
+
     if bala_visible:
-        disparar_bala(jugador_x, bala_y)
+        disparar_bala(bala_x, bala_y)
         bala_y -= bala_y_cambio
 
 
