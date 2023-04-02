@@ -23,6 +23,9 @@ pygame.display.set_caption("Invasión Espacial")
 icono = pygame.image.load("ovni.png")
 pygame.display.set_icon(icono)
 
+#llamamos a la imagen
+fondo = pygame.image.load("Fondo.jpg")
+
 #################################################################################################
 
 #Agregamos al personaje del juego
@@ -60,7 +63,10 @@ while se_ejecuta:
 
     # fill = relleno convinacion de colores RGB(red ,green , blue) tupla ,esta orden necesita que se actualize la pantalla
     #lo pondremos al comienzo pa que la pantalla no tape a nadie
-    pantalla.fill((205, 144, 228))
+    #pantalla.fill((205, 144, 228))
+
+    #imagen de fondo (ocupa toda la pantalla)
+    pantalla.blit(fondo, (0, 0))
 
     for evento in pygame.event.get():#Trae todos los eventos que tiene pygame
         if evento.type == pygame.QUIT:#este evento es el que corresponde a la X de salir
