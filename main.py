@@ -44,6 +44,16 @@ enemigo_y = random.randint(50, 200)
 enemigo_x_cambio = 0.3
 enemigo_y_cambio = 50
 
+#variables de la bala de la nabe
+img_bala = pygame.image.load("bala.png")
+bala_x = 0
+bala_y = 500
+
+bala_x_cambio = 0 #no la usaremos
+bala_y_cambio = 1
+
+bala_visible = False
+
 def jugador(x,y):
     # metodo que significa arrojar ,primer dato la imagen , segundo dato es una tupla de x y
     pantalla.blit(img_jugador, (x, y))
@@ -52,6 +62,13 @@ def jugador(x,y):
 def enemigo(x, y):
     pantalla.blit(img_enemigo, (x, y))
 
+#funcion disparar bala
+def disparar_bala(x, y):
+    # con esto podemos editar el valor de la bala
+    global bala_visible
+    bala_visible = True
+
+    pantalla.blit(img_bala, (x + 16, y + 10))
 
 #########################################################################
 
@@ -79,6 +96,10 @@ while se_ejecuta:
                 jugador_x_cambio = -0.3
             if evento.key == pygame.K_RIGHT: #flecha derecha
                 jugador_x_cambio = 0.3
+            #evento al presionar spacio o disparar
+            if evento.key == pygame.K_SPACE:
+                disparar_bala(jugador_x,bala_y)
+
 
         #este evento ocurre cuando se suelta la tecla
         if evento.type == pygame.KEYUP:
@@ -107,6 +128,12 @@ while se_ejecuta:
     elif enemigo_x >= 736:
         enemigo_x_cambio = -0.3
         enemigo_y += enemigo_y_cambio
+
+    #moviento bala jugador
+    if bala_visible:
+        disparar_bala(jugador_x, bala_y)
+        bala_y -= bala_y_cambio
+
 
     #llamamos a jugador pa que se actualize constantemente
     jugador(jugador_x, jugador_y)
